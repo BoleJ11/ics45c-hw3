@@ -1,0 +1,12 @@
+#include <iostream>
+
+#include "string.hpp"
+
+using namespace std;
+
+int main() {
+	String firstString("First");
+	String secondString("Second");
+	String thirdString(firstString);
+	String fourthString("Fourth");
+	String fifthString = String();

@@ -107,3 +107,27 @@ const char *String::strstr(const char *haystack, const char *needle) {
     }
     return nullptr;
 }
+
+bool String::operator==(const String &s) const {
+    return strcmp(buf, s.buf) == 0;
+}
+
+bool String::operator!=(const String &s) const {
+    return strcmp(buf, s.buf) != 0;
+}
+
+bool String::operator<(const String &s) const {
+    return strcmp(buf, s.buf) < 0;
+}
+
+bool String::operator>(const String &s) const {
+    return strcmp(buf, s.buf) > 0;
+}
+
+bool String::operator<=(const String &s) const {
+    return strcmp(buf, s.buf) <= 0;
+}
+
+bool String::operator>=(const String &s) const {
+    return strcmp(buf, s.buf) >= 0;
+}
