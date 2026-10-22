@@ -19,6 +19,8 @@ public:
 
 	String reverse() const;
 
+	int indexOf(char c) const;
+
 	int indexOf(const String &s) const;
 
 	bool operator==(const String &s) const;

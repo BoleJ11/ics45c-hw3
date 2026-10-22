@@ -1,3 +1,7 @@
+#include <iostream>
+
+#include "string.hpp"
+
 int String::strlen(const char *s) {
     int len = 0;
     while (s[len] != '\0') {
@@ -130,4 +134,103 @@ bool String::operator<=(const String &s) const {
 
 bool String::operator>=(const String &s) const {
     return strcmp(buf, s.buf) >= 0;
+}
+
+String::String(const char *s){
+	strncpy(buf, s, MAXLEN - 1);
+}
+
+String::String(const String &s){
+	strcpy(buf, s.buf);
+}
+
+String &String::operator=(const String &s){
+	if(this != &s){
+		strcpy(buf, s.buf);
+	}
+	return *this;
+}
+
+String String::operator+(const String &s) const {
+    String R;
+    strcpy(R.buf, buf);
+
+    int current_len = strlen(buf);
+    int other_len = strlen(s.buf);
+
+    if (current_len + other_len >= MAXLEN) {
+        std::cout << "ERROR: String Capacity Exceeded" << std::endl;
+        strncat(R.buf, s.buf, MAXLEN - 1 - current_len);
+    } else {
+        strcat(R.buf, s.buf);
+    }
+    return R;
+}
+
+String &String::operator+=(const String &s) {
+    int current_len = strlen(buf);
+    int other_len = strlen(s.buf);
+
+    if (current_len + other_len >= MAXLEN) {
+        std::cout << "ERROR: String Capacity Exceeded" << std::endl;
+        strncat(buf, s.buf, MAXLEN - 1 - current_len);
+    } else {
+        strcat(buf, s.buf);
+    }
+    return *this;
+}
+
+int String::size() const {
+    return strlen(buf);
+}
+
+char &String::operator[](int i) {
+    if (i < 0 || i >= size()) {
+        std::cout << "ERROR: Index Out Of Bounds" << std::endl;
+        return buf[0];
+    }
+    return buf[i];
+}
+
+int String::indexOf(char c) const {
+    const char *p = strchr(buf, c);
+    if (p != nullptr) {
+        return p - buf;
+    }
+    return -1;
+}
+
+int String::indexOf(const String &s) const {
+    const char *p = strstr(buf, s.buf);
+    if (p != nullptr) {
+        return p - buf;
+    }
+    return -1;
+}
+
+String String::reverse() const {
+    String temp;
+    reverse_cpy(temp.buf, this->buf);
+    return temp;
+}
+
+String::~String() {
+}
+
+void String::print(std::ostream &out) const {
+    out << buf;
+}
+
+void String::read(std::istream &in) {
+    in >> buf;
+}
+
+std::ostream &operator<<(std::ostream &out, const String &s) {
+    s.print(out);
+    return out;
+}
+
+std::istream &operator>>(std::istream &in, String &s) {
+    s.read(in);
+    return in;
 }
